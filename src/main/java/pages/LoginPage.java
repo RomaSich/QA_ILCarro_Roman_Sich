@@ -1,5 +1,6 @@
 package pages;
 
+import dto.UserDto;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,12 +26,24 @@ public class LoginPage extends BasePage {
     WebElement btnYalla;
     @FindBy(xpath = "//button[@type='button']")
     WebElement btnOK;
-
+    @FindBy(xpath = "//h2[@class='message']")
+    WebElement ErrorMessageLogin;
+    @FindBy(xpath = "//input[@id='email']/..//div[@class='error']/div")
+    WebElement errorMessageInputEmail;
+    @FindBy(xpath = "//input[@id='email']/..//div[@class='error']")
+    WebElement errorMessageInputEmailEmpty;
+    @FindBy(xpath = "//input[@id = 'password']/..//div[@class='error']")
+    WebElement errorMessageInputPassword;
 
 
     public LoginPage typeLoginForm(String email, String password) {
         inputEmail.sendKeys(email);
         inputPassword.sendKeys(password);
+        return this;
+    }
+    public LoginPage typeLoginForm(UserDto user) {
+        inputEmail.sendKeys(user.getEmail());
+        inputPassword.sendKeys(user.getPassword());
         return this;
     }
 
@@ -44,6 +57,20 @@ public class LoginPage extends BasePage {
         pause(3);
         btnOK.click();
         return new HomePage(driver);
+    }
+    public boolean isTextInElementPresent_errorEmail(String text)
+    {
+        return isTextInElementPresent(errorMessageInputEmail, text);
+    }
+    public boolean isTextInElementPresent_EmailEmpty(String text)
+    {
+        pause(2);
+        return isTextInElementPresent(errorMessageInputEmailEmpty, text);
+    }
+    public boolean isTextInElementPresent_PasswordEmpty(String text)
+    {
+        pause(2);
+        return isTextInElementPresent(errorMessageInputPassword, text);
     }
 
 

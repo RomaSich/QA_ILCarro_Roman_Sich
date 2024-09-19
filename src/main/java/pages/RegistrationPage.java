@@ -1,5 +1,6 @@
 package pages;
 
+import dto.UserDto;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -26,6 +27,8 @@ public class RegistrationPage extends BasePage{
     WebElement btnYalla;
     @FindBy(xpath = "//h2[@class='message']")
     WebElement textPopUp_regSuccess;
+    @FindBy(xpath = "//input[@id='email']/..//div[@class = 'error']/div")
+    WebElement errorMessageInputEmail;
 
 
     public RegistrationPage typeRegistrationForm(String name, String lastName, String email, String password) {
@@ -33,6 +36,13 @@ public class RegistrationPage extends BasePage{
         inputLastName.sendKeys(lastName);
         inputEmail.sendKeys(email);
         inputPassword.sendKeys(password);
+        return this;
+    }
+    public RegistrationPage typeRegistrationForm(UserDto user) {
+        inputName.sendKeys(user.getName());
+        inputLastName.sendKeys(user.getLastName());
+        inputEmail.sendKeys(user.getEmail());
+        inputPassword.sendKeys(user.getPassword());
         return this;
     }
 
@@ -52,6 +62,9 @@ public class RegistrationPage extends BasePage{
 
     public boolean isTextInElementPresent_regSuccess(){
         return isTextInElementPresent(textPopUp_regSuccess, "You are logged in success");
+    }
+    public boolean isTextInElementPresent_regSuccess(String text){
+        return isTextInElementPresent(errorMessageInputEmail, text);
     }
 
 }
