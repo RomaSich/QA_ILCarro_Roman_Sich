@@ -17,6 +17,8 @@ public class HomePage extends BasePage{
     WebElement btnLogin;
     @FindBy(xpath = "//a[text()=' Sign up ']")
     WebElement btnSignUp ;
+    @FindBy(xpath = "//a[text()=' Let the car work ']")
+    WebElement btnLetTheCarWork ;
 
     public LoginPage clickBtnLogin() {
         btnLogin.click();
@@ -28,4 +30,8 @@ public class HomePage extends BasePage{
         return new RegistrationPage(driver);
     }
 
+
+    public void clickBtnLetTheCarWork() {
+        btnLetTheCarWork.click();
+    }
 }
