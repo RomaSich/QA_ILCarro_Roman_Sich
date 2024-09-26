@@ -36,6 +36,10 @@ public class LetTheCarWorkPage extends BasePage{
     WebElement inputPrice;
     @FindBy(id = "about")
     WebElement inputAbout;
+    @FindBy(xpath = "//button[text()='Submit']")
+    WebElement clickBtnSubmit;
+    @FindBy(xpath = "//button[text()='Add another car']")
+    WebElement clickBtnAddCar;
 
     public void typeAddNewCarForm(CarDto car) {
         inputLocation.sendKeys(car.getCity());
@@ -63,5 +67,17 @@ public class LetTheCarWorkPage extends BasePage{
     private void Price(double price)
     {
         inputPrice.sendKeys(String.valueOf(price));
+    }
+    public void ClickBtnSubmit()
+    {
+        clickBtnSubmit.click();
+    }
+    public void ClickBtnAddCar()
+    {
+        clickBtnAddCar.click();
+    }
+    public boolean samePageByUrl(String url)
+    {
+        return driver.getCurrentUrl().equals(url);
     }
 }
