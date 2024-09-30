@@ -2,6 +2,7 @@ package pages;
 
 import dto.UserDto;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,14 +49,12 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage clickBtnYalla() {
-        pause(3);
-        btnYalla.click();
+        clickWait(btnYalla,10);
         return this;
     }
     public HomePage clickBtnOK()
     {
-        pause(3);
-        btnOK.click();
+        clickWait(btnOK,3);
         return new HomePage(driver);
     }
     public boolean isTextInElementPresent_errorEmail(String text)
@@ -64,12 +63,12 @@ public class LoginPage extends BasePage {
     }
     public boolean isTextInElementPresent_EmailEmpty(String text)
     {
-        pause(2);
+        clickWait(By.xpath("//input[@id='email']/..//div[@class='error']"),10);
         return isTextInElementPresent(errorMessageInputEmailEmpty, text);
     }
     public boolean isTextInElementPresent_PasswordEmpty(String text)
     {
-        pause(2);
+        clickWait(By.xpath("//input[@id = 'password']/..//div[@class='error']"),10);
         return isTextInElementPresent(errorMessageInputPassword, text);
     }
 

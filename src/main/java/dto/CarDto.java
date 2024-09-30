@@ -1,6 +1,6 @@
 package dto;
 
-import enums.FuelForCar;
+import utils.FuelForCar;
 import lombok.*;
 
 @Getter
@@ -15,11 +15,12 @@ public class CarDto {
     private String manufacture;
     private String model;
     private String year;
-    private FuelForCar fuel;
+    private String fuel;
     private int seats;
     private String carClass;
     private double pricePerDay;
     private String about;
+    private String image;
     private String city; //location
 
 

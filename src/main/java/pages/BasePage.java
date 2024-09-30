@@ -4,8 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.internal.PackageUtils;
 import utils.HeaderMenuItem;
+
+import java.time.Duration;
 
 public class BasePage {
     static WebDriver driver;
@@ -49,5 +53,15 @@ public class BasePage {
                 throw new IllegalArgumentException("invalid parametr headerMenuItem");
 
         }
+    }
+    public void clickWait(WebElement element, int time)
+    {
+        new WebDriverWait(driver, Duration.ofSeconds(time))
+                .until(ExpectedConditions.elementToBeClickable(element)).click();
+    }
+    public void clickWait(By locator, int time)
+    {
+        new WebDriverWait(driver, Duration.ofSeconds(time))
+                .until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 }
