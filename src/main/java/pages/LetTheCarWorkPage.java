@@ -48,6 +48,8 @@ public class LetTheCarWorkPage extends BasePage{
     WebElement messageSuccessAddCar;
     @FindBy(xpath = "//input[@id='make']/..//div[@class='error']/div")
     WebElement errorMessageManufacture;
+    @FindBy(xpath = "//button[contains(text(),'Submit')and @disabled]")
+    WebElement btnSubmitNotClickable;
     @FindBy(xpath = "//input[@id='model']/..//div[@class='error']/div")
     WebElement errorMessageModel;
     @FindBy(xpath = "//input[@id='year']/..//div[@class='error']/div")
@@ -63,7 +65,7 @@ public class LetTheCarWorkPage extends BasePage{
 
     public void typeAddNewCarForm(CarDto car) {
         inputLocation.sendKeys(car.getCity());
-//        pause(3);
+//
 //        driver.findElement(By.xpath("//div[@class='pac-item']")).click();
         clickWait(By.xpath("//div[@class='pac-item']"),3);
         inputManufacture.sendKeys(car.getManufacture());
@@ -90,15 +92,20 @@ public class LetTheCarWorkPage extends BasePage{
     }
     public void ClickBtnSubmit()
     {
-        clickWait(By.xpath("//button[text()='Submit']"),10);
-        clickBtnSubmit.click();
+        if(clickBtnSubmit.getAttribute("disabled")==null) {
+            clickWait(By.xpath("//button[text()='Submit']"), 10);
+        }else
+        {
+            System.out.println("btnSubmit no clickable");
+        }
     }
     public boolean validatePopUpMessage(String text){
-
+        clickWait(By.xpath("//div[@class='dialog-container']/h2"),10);
         return isTextInElementPresent(messageSuccessAddCar, text);
     }
     public void ClickBtnAddCar()
     {
+
         clickBtnAddCar.click();
     }
     public boolean samePageByUrl(String url)
@@ -106,6 +113,15 @@ public class LetTheCarWorkPage extends BasePage{
         return driver.getCurrentUrl().equals(url);
     }
 
+    public boolean checkAndClickBtnSubmit() {
+        if (btnSubmitNotClickable.getAttribute("disabled") == null) {
+            clickWait(clickBtnSubmit, 10);
+            return false;
+        } else {
+            System.out.println("btnSubmit not clickable");
+            return true;
+        }
+    }
     public boolean isTextInElementErrorMessageManufacture(String text)
     {
         clickWait(By.xpath("//input[@id='make']/..//div[@class='error']/div"),10);

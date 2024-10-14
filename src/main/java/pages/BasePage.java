@@ -26,6 +26,7 @@ public class BasePage {
     }
     @FindBy(xpath = "//a[text()='Delete account']")
     WebElement isTextInPagePresent;
+
     public boolean isElementPresent()
     {
         return isTextInPagePresent.isDisplayed();
@@ -64,4 +65,5 @@ public class BasePage {
         new WebDriverWait(driver, Duration.ofSeconds(time))
                 .until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
+
 }

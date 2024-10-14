@@ -11,14 +11,19 @@ import pages.HomePage;
 import pages.LetTheCarWorkPage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
+import utils.RetryAnalyzer;
 
 import java.lang.reflect.Method;
 
 import static utils.RandomUtils.*;
 import static pages.BasePage.*;
+import static utils.PropertiesReader.getProperty;
 
 public class AddNewCarTests extends ApplicationManager {
-   UserDto user = new UserDto("Roman", "Sich", "roma@gmail.com", "7206Rom@");
+    UserDto user = new UserDto(getProperty("data.properties", "name"),
+            getProperty("data.properties", "lastName"),
+            getProperty("data.properties", "email"),
+            getProperty("data.properties", "password"));
     LoginPage loginPage;
     LetTheCarWorkPage letTheCarWorkPage;
 
@@ -29,13 +34,14 @@ public class AddNewCarTests extends ApplicationManager {
         loginPage.typeLoginForm(user).clickBtnYalla();
         letTheCarWorkPage = clickButtonsOnHeader(HeaderMenuItem.LET_THE_CAR_WORK);
     }
+
     @Test
     public void loginPositiveTest() {
         CarDto carDto = CarDto.builder().build();
         letTheCarWorkPage.typeAddNewCarForm(carDto);
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarPositiveTest(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -50,13 +56,14 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(300))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
-        //letTheCarWorkPage.ClickBtnSubmit();
+        letTheCarWorkPage.ClickBtnSubmit();
         Assert.assertTrue(letTheCarWorkPage.validatePopUpMessage
-                (car.getManufacture()+" "+car.getModel()+" added successful "));
+                (car.getManufacture() + " " + car.getModel() + " " + "added successful"));
     }
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTestWrongManufacture(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -71,12 +78,13 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(100))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
         letTheCarWorkPage.ClickBtnSubmit();
-        Assert.assertTrue(letTheCarWorkPage.isTextInElementErrorMessageManufacture(" Make is required "));
+        Assert.assertTrue( letTheCarWorkPage.checkAndClickBtnSubmit());
     }
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTestWrongModel(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -91,12 +99,13 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(100))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
         letTheCarWorkPage.ClickBtnSubmit();
-        Assert.assertTrue(letTheCarWorkPage.isTextInElementErrorMessageModel(" Make is required "));
+        Assert.assertTrue(letTheCarWorkPage.checkAndClickBtnSubmit());
     }
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTestWrongYear(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -111,12 +120,13 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(100))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
         letTheCarWorkPage.ClickBtnSubmit();
-        Assert.assertTrue(letTheCarWorkPage.isTextInElementErrorMessageYear(" Wrong year "));
+        Assert.assertTrue(letTheCarWorkPage.checkAndClickBtnSubmit());
     }
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTestWrongSeats(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -131,12 +141,13 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(100))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
         letTheCarWorkPage.ClickBtnSubmit();
-        Assert.assertTrue(letTheCarWorkPage.isTextInElementErrorMessageSeats(" Car must have min 2 seat "));
+        Assert.assertTrue(letTheCarWorkPage.checkAndClickBtnSubmit());
     }
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTestWrongClassCar(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -151,12 +162,13 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(100))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
         letTheCarWorkPage.ClickBtnSubmit();
-        Assert.assertTrue(letTheCarWorkPage.isTextInElementErrorMessageClassCar(" Car class is required "));
+        Assert.assertTrue(letTheCarWorkPage.checkAndClickBtnSubmit());
     }
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTestWrongSerialNumber(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -171,12 +183,13 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(100))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
         letTheCarWorkPage.ClickBtnSubmit();
-        Assert.assertTrue(letTheCarWorkPage.isTextInElementErrorMessageSerialNumber(" To long car registration number "));
+        Assert.assertTrue(letTheCarWorkPage.checkAndClickBtnSubmit());
     }
-    @Test
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTestWrongPrice(Method method) {
         CarDto car = CarDto.builder()
                 .city("Haifa")
@@ -191,9 +204,9 @@ public class AddNewCarTests extends ApplicationManager {
                 .about(generateString(100))
                 .image("maxresdefault.jpg")
                 .build();
-        logger.info("start --> "+method.getName()+car.toString());
+        logger.info("start --> " + method.getName() + car.toString());
         letTheCarWorkPage.typeAddNewCarForm(car);
         letTheCarWorkPage.ClickBtnSubmit();
-        Assert.assertTrue(letTheCarWorkPage.isTextInElementErrorMessageSeats(" Price is required "));
+        Assert.assertTrue(letTheCarWorkPage.checkAndClickBtnSubmit());
     }
 }

@@ -29,6 +29,8 @@ public class RegistrationPage extends BasePage{
     WebElement textPopUp_regSuccess;
     @FindBy(xpath = "//input[@id='email']/..//div[@class = 'error']/div")
     WebElement errorMessageInputEmail;
+    @FindBy(xpath = "//button[contains(text(),'Y’alla!')and @disabled]")
+    WebElement btnYallaNotClickable;
 
 
     public RegistrationPage typeRegistrationForm(String name, String lastName, String email, String password) {
@@ -47,7 +49,6 @@ public class RegistrationPage extends BasePage{
     }
 
     public RegistrationPage clickCheckBox() {
-        //checkBox.click();
         System.out.println(checkBox.getRect().getWidth() +" X "+checkBox.getRect().getHeight());
         int width= checkBox.getRect().getWidth();
         int height = checkBox.getRect().getHeight();
@@ -56,8 +57,24 @@ public class RegistrationPage extends BasePage{
         return this;
     }
     public RegistrationPage clickBtnYalla(){
-        btnYalla.click();
+        if(btnYalla.getAttribute("disabled")==null)
+        {
+            clickWait(btnYalla,10);
+        }else
+        {  System.out.println("btnYalla not clickable");
+        }
         return this;
+    }
+    public boolean checkAndClickBtnYalla() {
+        if(btnYallaNotClickable.getAttribute("disabled")==null)
+        {
+            clickWait(btnYalla,10);
+            return false;
+        }else
+        {  System.out.println("btnYalla not clickable");
+            return true;
+        }
+
     }
 
     public boolean isTextInElementPresent_regSuccess(){
