@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import static utils.TakeScreenShot.takeScreenShot;
 
 public class TestNGListener implements ITestListener {
 
@@ -24,8 +25,8 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
-        logger.info("failure test --> "+result.getMethod());
-
+        logger.info("failed test --> "+result.getMethod());
+       // takeScreenShot((TakeScreenShot));
     }
     @Override
     public void onTestSkipped(ITestResult result) {
@@ -42,6 +43,6 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onFinish(ITestContext context) {
         ITestListener.super.onFinish(context);
-        logger.info("finish testing on date --> "+context.getStartDate());
+        logger.info("stop testing on date --> "+context.getStartDate());
     }
 }

@@ -26,7 +26,7 @@ public class ApplicationManager {
     @BeforeMethod
     public void setUp()
     {
-        logger.info("Start method --> setUp");
+
         driver = new ChromeDriver();
 
         WebDriverListener webDriverListener = new WDListener();
@@ -37,7 +37,6 @@ public class ApplicationManager {
     @AfterMethod
     public void tearDown()
     {
-        logger.info("Stop method --> tearDown");
 //        if(driver != null)
 //        {
 //            pause(2);

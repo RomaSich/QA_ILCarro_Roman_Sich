@@ -2,6 +2,7 @@ package tests;
 
 import dto.CarDto;
 import dto.UserDto;
+import org.testng.annotations.Listeners;
 import utils.FuelForCar;
 import manager.ApplicationManager;
 import org.testng.Assert;
@@ -12,12 +13,14 @@ import pages.LetTheCarWorkPage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
 import utils.RetryAnalyzer;
+import utils.TestNGListener;
 
 import java.lang.reflect.Method;
 
 import static utils.RandomUtils.*;
 import static pages.BasePage.*;
 import static utils.PropertiesReader.getProperty;
+@Listeners(TestNGListener.class)
 
 public class AddNewCarTests extends ApplicationManager {
     UserDto user = new UserDto(getProperty("data.properties", "name"),

@@ -2,25 +2,32 @@ package tests;
 
 import dto.UserDto;
 import manager.ApplicationManager;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
 import utils.RetryAnalyzer;
-
+import utils.TestNGListener;
+import static utils.TakeScreenShot.takeScreenShot;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
 import static utils.RandomUtils.*;
 import static pages.BasePage.clickButtonsOnHeader;
 import static utils.PropertiesReader.getProperty;
+@Listeners(TestNGListener.class)
 
 public class LoginTests extends ApplicationManager {
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     public void loginPositiveTest(Method method)
-    {logger.info("start --> " + method.getName());
+    {
+
+        logger.info("start --> " + method.getName());
+        takeScreenShot((TakesScreenshot) getDriver());
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLogin()
                 .typeLoginForm(getProperty("data.properties", "email"),
