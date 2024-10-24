@@ -31,13 +31,13 @@ public class searchCarTests extends ApplicationManager {
     }
 
 
-    @Description("negative methode search car")
+    @Description("positive methode search car without calendar")
     @Owner("QA not Roman")
-    @Test(expectedExceptions = {org.openqa.selenium.NoSuchElementException.class, IndexOutOfBoundsException.class})
+    @Test
     public void searchCarPositiveTest_withoutCalendar()
     {
         homePage = new HomePage(getDriver());
-        homePage.fillSearchCarForm("Haifa","12/10/2024 - 1/22/2025");
+        homePage.fillSearchCarFormWithoutCalendar("Haifa","12/10/2024 - 1/22/2025");
     }
 
 }

@@ -93,7 +93,7 @@ public class HomePage extends BasePage{
         return true;
     }
 
-    public void fillSearchCarForm(String city, String date) {
+    public void fillSearchCarFormWithoutCalendar(String city, String date) {
         fillInputCity(city);
         inputDates.sendKeys(date);
         btnYalla.click();
